@@ -9,7 +9,7 @@ beforeAll(async () => {
   try {
    const posts = require('../Data/Posts.json')
    const comments = require('../Data/Comments.json')
-   await sequelize.queryInterface.bulkInsert("Customers", [{
+   await sequelize.queryInterface.bulkInsert("Users", [{
      email: "test1@mail.com",
      password: hashPass('tests123'),
      createdAt: new Date(),
@@ -38,17 +38,17 @@ beforeAll(async () => {
  })
  
  afterAll(async () => {
-   await sequelize.queryInterface.bulkDelete("Customers", null, {
+   await sequelize.queryInterface.bulkDelete("Users", null, {
      restartIdentity: true,
      cascade: true,
      truncate: true
    })
-   await sequelize.queryInterface.bulkDelete('Genres', null, {
+   await sequelize.queryInterface.bulkDelete('Posts', null, {
      restartIdentity: true,
      cascade: true,
      truncate: true
    })
-   await sequelize.queryInterface.bulkDelete('Movies', null, {
+   await sequelize.queryInterface.bulkDelete('Comments', null, {
      restartIdentity: true,
      cascade: true,
      truncate: true
