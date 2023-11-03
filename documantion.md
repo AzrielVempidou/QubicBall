@@ -82,19 +82,28 @@ _Response (400 - Bad Request)_
 
 ```json
 {
+  "status": 400,
   "message": "Email is already in use. Please choose another email."
 }
 OR
 {
+  "status": 400,
   "message": "Invalid email format. Please provide a valid email address."
 }
 OR
 {
-  "message": "All fields are required. Please fill in all the fields."
+  "status": 400,
+  "message": "username fields are required. Please fill in all the fields."
 }
 OR
 {
-  "message": "Invalid date format. Please provide a valid date."
+  "status": 400,
+  "message": "email fields are required. Please fill in all the fields."
+}
+OR
+{
+  "status": 400,
+  "message": "password fields are required. Please fill in all the fields."
 }
 ```
 
@@ -129,11 +138,8 @@ _Response (400 - Bad Request)_
 
 ```json
 {
-  "message": "Email is required"
-}
-OR
-{
-  "message": "Password is required"
+  "status": 400,
+  "message": "Email/Password  is required"
 }
 ```
 
@@ -230,6 +236,7 @@ _Response (404 - Bad Request)_
 
 ```JSON
 {
+  "status": 404,
   "message": "Blog not found"
 }
 ```
@@ -276,10 +283,12 @@ _Response (400 - Bad Request)_
 
 ```json
 {
+  "status": 400,
   "message": "title fields are required. Please fill in all the fields."
 }
 OR
 {
+  "status": 400,
   "message": "body fields are required. Please fill in all the fields."
 }
 ```
@@ -332,6 +341,7 @@ _Response (404 - Bad Request)_
 
 ```JSON
 {
+  "status": 404,
   "message": "Comment not found"
 }
 ```
@@ -376,10 +386,12 @@ _Response (400 - Bad Request)_
 
 ```json
 {
+  "status": 400,
   "message": "postId fields are required. Please fill in all the fields."
 }
 OR
 {
+  "status": 400,
   "message": "comment fields are required. Please fill in all the fields."
 }
 ```
@@ -430,6 +442,7 @@ _Response (404 - Not Found)
 
 ```json
 {
+  "status": 404,
   "message": "Blog not found"
 }
 ```
@@ -438,10 +451,12 @@ _Response (400 - Bad Request)_
 
 ```json
 {
+  "status": 400,
   "message": "title fields are required. Please fill in all the fields."
 }
 OR
 {
+  "status": 400,
   "message": "body fields are required. Please fill in all the fields."
 }
 ```
@@ -481,6 +496,7 @@ _Response (404 - Not Found)_
 
 ```json
 {
+  "status": 404,
   "message": "Blog not found"
 }
 ```
@@ -530,6 +546,7 @@ _Response (404 - Not Found)
 
 ```json
 {
+  "status": 404,
   "message": "Comment not found"
 }
 ```
@@ -579,6 +596,7 @@ _Response (401 - Unauthorized)_
 
 ```json
 {
+  "status": 401,
   "message": "Invalid token"
 }
 ```
@@ -587,6 +605,7 @@ _Response (403 - Forbidden)_
 
 ```json
 {
+  "status": 403,
   "message": "You are not authorized"
 }
 ```
@@ -595,6 +614,7 @@ _Response (500 - Internal Server Error)_
 
 ```json
 {
+  "status": 500,
   "message": "Internal server error"
 }
 ```
