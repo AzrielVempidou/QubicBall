@@ -225,4 +225,43 @@ describe("Comment Routes Test", () => {
 
     });
   });
+
+  describe("DELETE /comments/:commentId", () => {
+    test("should respond with 200 and success message when valid access token and commentId are provided", async () => {
+
+        const commentId = 1
+        const response = await request(app)
+          .delete(`/comments/${commentId}`)
+          .set("access_token", access_token);
+  
+        expect(response.status).toBe(200);
+        expect(response.body.response.status).toBe(200);
+        expect(response.body.response.message).toBe("Comment has been deleted");
+    });
+  
+    test("should respond with 400 and appropriate error message when access token is missing", async () => {
+        const commentId = 1
+
+        const response = await request(app)
+          .delete(`/comments/${commentId}`);
+  
+        expect(response.status).toBe(400);
+        expect(response.body.status).toBe(400);
+        expect(response.body.message).toBe("Unauthorized: Access token is required");
+
+    });
+  
+    test("should respond with 404 and appropriate error message when commentId is invalid", async () => {
+
+        const nonExistentPostId = 9999; 
+        const response = await request(app)
+          .delete(`/comments/${nonExistentPostId}`) // Gunakan ID yang tidak ada di database
+          .set("access_token", access_token);
+    
+        expect(response.status).toBe(404);
+        expect(response.body.status).toBe(404);
+        expect(response.body.message).toBe("Comment not found");
+
+    });
+  });
 })
