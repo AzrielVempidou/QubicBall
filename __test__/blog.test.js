@@ -8,7 +8,6 @@ let access_token;
 beforeAll(async () => {
   try {
     const posts = require("../Data/Posts.json");
-    const comments = require("../Data/Comments.json");
 
     await sequelize.queryInterface.bulkInsert("Users", [
       {
