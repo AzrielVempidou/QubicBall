@@ -30,7 +30,9 @@ beforeAll(async () => {
       })
     );
 
-    await request(app).post("/login").send({
+    const response = await request(app)
+      .post("/login")
+      .send({
       email: "example@example.com",
       password: "password123",
     });
@@ -126,3 +128,164 @@ describe("GET /blogs/:blogId", async () => {
   });
 
 });
+
+describe("POST /blogs", async () => {
+  test("should respond with 201 and the created blog post when valid access token and valid blog data are provided", async () => {
+    const blogData = {
+      title: "Sample Blog",
+      body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    };
+
+    const response = await request(app)
+      .post("/blogs")
+      .set("access_token", access_token)
+      .send(blogData);
+
+      expect(response.status).toBe(201);
+      expect(response.body.response.status).toBe(201);
+      expect(response.body.response.message).toBe("Blog created successfully");
+      expect(response.body.response.blog).toBeDefined();
+      expect(response.body.response.blog.title).toBe(blogData.title);
+      expect(response.body.response.blog.body).toBe(blogData.body);
+  })
+
+  test("should respond with 400 and appropriate error message when access token is missing", async () => {
+      const blogData = {
+        title: "Sample Blog",
+        body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      };
+
+      const response = await request(app)
+        .post("/blogs")
+        .send(blogData);
+
+      expect(response.status).toBe(400);
+      expect(response.body.status).toBe(400);
+      expect(response.body.message).toBe("Unauthorized: Access token is required");
+
+  });
+
+  test("should respond with 400 and appropriate error message when title field is missing", async () => {
+
+      const blogData = {
+        body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      };
+
+      const response = await request(app)
+        .post("/blogs")
+        .set("access_token", access_token)
+        .send(blogData);
+
+        expect(response.status).toBe(400);
+        expect(response.body.status).toBe(400);
+        expect(response.body.message).toBe("title fields are required. Please fill in all the fields.");
+
+  });
+
+  test("should respond with 400 and appropriate error message when body field is missing", async () => {
+  
+      const blogData = {
+        title: "Sample Blog",
+      };
+
+      const response = await request(app)
+        .post("/blogs")
+        .set("access_token", access_token)
+        .send(blogData);
+
+      expect(response.status).toBe(400);
+      expect(response.body.status).toBe(400);
+      expect(response.body.message).toBe("body fields are required. Please fill in all the fields.");
+
+  });
+})
+
+describe("PUT /blogs/:blogId", async () => {
+  test("should respond with 200 and success message when valid access token, valid blogId, and valid blog data are provided", async () => {
+
+      const updatedBlogData = {
+        title: "Updated Sample Blog",
+        body: "Updated content for the blog.",
+      };
+
+      const blogId = 2;
+      const response = await request(app)
+        .put(`/blogs/${blogId}`)
+        .set("access_token", access_token)
+        .send(updatedBlogData);
+
+      expect(response.status).toBe(200);
+      expect(response.body.response.status).toBe(200);
+      expect(response.body.response.message).toBe("Blog updated successfully");
+  });
+
+  test("should respond with 404 when specified blogId is not found", async () => {
+
+      const nonExistentBlogId = 9999; // ID yang tidak ada dalam database
+      const updatedBlogData = {
+        title: "Updated Sample Blog",
+        body: "Updated content for the blog.",
+      };
+
+      const response = await request(app)
+        .put(`/blogs/${nonExistentBlogId}`)
+        .set("access_token", access_token)
+        .send(updatedBlogData);
+
+      expect(response.status).toBe(404);
+      expect(response.body.status).toBe(404);
+      expect(response.body.message).toBe("Blog not found");
+
+  });
+
+  test("should respond with 400 and appropriate error message when access token is missing", async () => {
+
+      const updatedBlogData = {
+        title: "Updated Sample Blog",
+        body: "Updated content for the blog.",
+      };
+
+      const response = await request(app)
+        .put(`/blogs/${blogId}`)
+        .send(updatedBlogData);
+
+      expect(response.status).toBe(400);
+      expect(response.body.status).toBe(400);
+      expect(response.body.message).toBe("Unauthorized: Access token is required");
+
+  });
+
+  test("should respond with 400 and appropriate error message when title field is missing", async () => {
+
+      const updatedBlogData = {
+        body: "Updated content for the blog.",
+      };
+
+      const response = await request(app)
+        .put(`/blogs/${blogId}`)
+        .set("access_token", access_token)
+        .send(updatedBlogData);
+
+      expect(response.status).toBe(400);
+      expect(response.body.status).toBe(400);
+      expect(response.body.message).toBe("title fields are required. Please fill in all the fields.");
+
+  });
+
+  test("should respond with 400 and appropriate error message when body field is missing", async () => {
+
+      const updatedBlogData = {
+        title: "Updated Sample Blog",
+      };
+
+      const response = await request(app)
+        .put(`/blogs/${blogId}`)
+        .set("access_token", access_token)
+        .send(updatedBlogData);
+
+      expect(response.status).toBe(400);
+      expect(response.body.status).toBe(400);
+      expect(response.body.message).toBe("body fields are required. Please fill in all the fields.");
+
+  });
+})
