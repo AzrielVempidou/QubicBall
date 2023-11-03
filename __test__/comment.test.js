@@ -172,4 +172,57 @@ describe("Comment Routes Test", () => {
     });
   })
 
+  describe("PUT /comments/:commentId", () => {
+    test("should respond with 200 and success message when valid access token, blogId, and updated comment data are provided", async () => {
+  
+        const updatedCommentData = {
+          comment: "Updated sample comment",
+        };
+        const commentId = 1
+        const response = await request(app)
+          .put(`/comments/${commentId}`)
+          .set("access_token", access_token)
+          .send(updatedCommentData);
+  
+        expect(response.status).toBe(200);
+        expect(response.body.response.status).toBe(200);
+        expect(response.body.response.message).toBe("Comment updated successfully");
+
+    });
+  
+    test("should respond with 400 and appropriate error message when access token is missing", async () => {
+
+        const updatedCommentData = {
+          comment: "Updated sample comment",
+        };
+        
+        const commentId = 1
+
+        const response = await request(app)
+          .put(`/comments/${commentId}`)
+          .send(updatedCommentData);
+  
+        expect(response.status).toBe(400);
+        expect(response.body.status).toBe(400);
+        expect(response.body.message).toBe("Unauthorized: Access token is required");
+ 
+    });
+  
+    test("should respond with 404 and appropriate error message when commentId is invalid", async () => {
+
+        const updatedCommentData = {
+          comment: "Updated sample comment",
+        };
+        const nonExistentPostId = 9999; 
+        const response = await request(app)
+          .put(`/comments/${nonExistentPostId}`) // Gunakan ID yang tidak ada di database
+          .set("access_token", access_token)
+          .send(updatedCommentData);
+  
+        expect(response.status).toBe(404);
+        expect(response.body.status).toBe(404);
+        expect(response.body.message).toBe("Comment not found");
+
+    });
+  });
 })
