@@ -83,7 +83,8 @@ beforeAll(async () => {
     expect(response.statusCode).toBe(400)
     // console.log(">>",response.body);
     expect(response.body).toBeInstanceOf(Object)
-    expect(response.body).toHaveProperty("msg", "email is required")
+    expect(response.body.status).toBe(400);
+    expect(response.body.message).toBe("username fields are required. Please fill in all the fields.");
 
   })
    test('should return 400  when email empty', async () => {
@@ -97,7 +98,8 @@ beforeAll(async () => {
      expect(response.statusCode).toBe(400)
      // console.log(">>",response.body);
      expect(response.body).toBeInstanceOf(Object)
-     expect(response.body).toHaveProperty("msg", "email fields are required. Please fill in all the fields.")
+     expect(response.body.status).toBe(400);
+     expect(response.body.message).toBe("email fields are required. Please fill in all the fields.");
  
    })
    test('should return 400  when password empty', async () => {
@@ -110,7 +112,8 @@ beforeAll(async () => {
      
      expect(response.statusCode).toBe(400)
      expect(response.body).toBeInstanceOf(Object)
-     expect(response.body).toHaveProperty("msg", "password fields are required. Please fill in all the fields.")
+     expect(response.body.status).toBe(400);
+     expect(response.body.message).toBe("password fields are required. Please fill in all the fields.");
  
    })
    test('should return 400 when register using format email', async () =>{
@@ -121,7 +124,8 @@ beforeAll(async () => {
  
      const response = await request(app).post('/register').send(body)
      expect(response.statusCode).toBe(400)
-     expect(response.body).toHaveProperty("msg", "Invalid email format. Please provide a valid email address.")
+     expect(response.body.status).toBe(400);
+     expect(response.body.message).toBe("Invalid email format. Please provide a valid email address.");
    })
    test('should return 400 when register using existing email', async () => {
      const body = {
@@ -132,7 +136,7 @@ beforeAll(async () => {
      
      expect(response.statusCode).toBe(400)
      expect(response.body).toBeInstanceOf(Object)
-     expect(response.body).toHaveProperty("msg", "Email is already in use. Please choose another email.")
- 
+     expect(response.body.status).toBe(400);
+     expect(response.body.message).toBe("Email is already in use. Please choose another email."); 
    })
  })
