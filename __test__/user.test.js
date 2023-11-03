@@ -18,27 +18,6 @@ beforeAll(async () => {
       },
     ]);
 
-    await sequelize.queryInterface.bulkInsert(
-      "Posts",
-      posts.map((posts) => {
-        return {
-          ...posts,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        };
-      })
-    );
-
-    await sequelize.queryInterface.bulkInsert(
-      "Comments",
-      comments.map((comments) => {
-        return {
-          ...comments,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        };
-      })
-    );
   } catch (error) {
     console.log(error);
   }
@@ -46,16 +25,6 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await sequelize.queryInterface.bulkDelete("Users", null, {
-    restartIdentity: true,
-    cascade: true,
-    truncate: true,
-  });
-  await sequelize.queryInterface.bulkDelete("Posts", null, {
-    restartIdentity: true,
-    cascade: true,
-    truncate: true,
-  });
-  await sequelize.queryInterface.bulkDelete("Comments", null, {
     restartIdentity: true,
     cascade: true,
     truncate: true,
@@ -70,7 +39,9 @@ describe("POST : /register", () => {
       password: "tests123",
     };
 
-    const response = await request(app).post("/register").send(body);
+    const response = await request(app)
+      .post("/register")
+      .send(body);
 
     expect(response.statusCode).toBe(201);
     expect(response.body).toBeInstanceOf(Object);
@@ -208,6 +179,8 @@ describe("POST : /login", () => {
     access_token = response.body.access_token;
     expect(response.statusCode).toBe(401);
     expect(response.body.status).toBe(401);
-    expect(response.body.message).toBe("Unauthorized: Email not registered");
+    expect(response.body.message).toBe("Unauthorized: Access token is required");
   });
 });
+
+

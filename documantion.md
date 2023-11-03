@@ -13,7 +13,7 @@ Routes below need authentication:
 - `GET /blogs/:blogId`
 - `POST /blogs`
 - `GET /comments/:postId`
-- `POST /comments`
+- `POST /comments/:postId`
 
 Routes below need authentication & authorization:
 
@@ -122,12 +122,12 @@ Request:
 }
 ```
 
-_Response (201 - OK)_
+_Response (200 - OK)_
 
 ```json
 {
   "response": {
-    "status": 201,
+    "status": 200,
     "message": "Login successfully",
     "access_token": "string"
   }
@@ -329,7 +329,10 @@ _Response (200 - OK)_
         "userId": 1,
         "comment": "text",
         "createdAt": "timestamp",
-        "updatedAt": "timestamp"
+        "updatedAt": "timestamp",
+        "User" : {
+          "username":  "string"
+        }
       },
       ...
     ]
@@ -346,7 +349,7 @@ _Response (404 - Bad Request)_
 }
 ```
 
-## 7. POST /comments
+## 7. POST /comments/:postId
 
 Description:
 Add a new comment to a blog post.
@@ -597,7 +600,7 @@ _Response (401 - Unauthorized)_
 ```json
 {
   "status": 401,
-  "message": "Invalid token"
+  "message": "Unauthorized: Access token is required"
 }
 ```
 

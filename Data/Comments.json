@@ -1,0 +1,22 @@
+[
+  {
+      "postId": 1,
+      "userId": 1,
+      "comment": "Comment 1 from User 1 for post 1."
+  },
+  {
+      "postId": 2,
+      "userId": 1,
+      "comment": "Comment 1 from User 1 for post 2."
+  },
+  {
+      "postId": 1,
+      "userId": 2,
+      "comment": "Comment 1 from User 2 for post 1."
+  },
+  {
+      "postId": 2,
+      "userId": 2,
+      "comment": "Comment 1 from User 2 for post 2."
+  }
+]
