@@ -300,14 +300,6 @@ Description:
 Get comments for a specific blog post by ID.
 Request:
 
-- headers:
-
-```json
-{
-  "access_token": "string"
-}
-```
-
 - params:
 
 ```json
@@ -322,7 +314,7 @@ _Response (200 - OK)_
 {
   "response": {
     "status": 200,
-    "message": "Blog retrieved successfully",
+    "message": "Comments retrieved successfully",
     "comments": [
       {
         "id": 1,
@@ -333,7 +325,8 @@ _Response (200 - OK)_
         "updatedAt": "timestamp",
         "User" : {
           "username":  "string"
-        }
+        },
+        
       },
       ...
     ]
