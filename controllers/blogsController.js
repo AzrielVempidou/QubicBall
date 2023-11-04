@@ -19,7 +19,6 @@ module.exports = class blogController{
         }
       })
     } catch (error) {
-      console.log(error, "error controllers");
       next(error)
     }
   }
@@ -51,7 +50,6 @@ module.exports = class blogController{
         }
       })
     } catch (error) {
-      console.log(error.message, "<<");
       next(error)
     }
   }
@@ -68,7 +66,6 @@ module.exports = class blogController{
         }
       })
     } catch (error) {
-      console.log(error, '<<');
       next(error)
     }
   }
@@ -93,7 +90,6 @@ module.exports = class blogController{
       })
 
     } catch (error) {
-      console.log(error, "<<");
       next(error)
     }
   }

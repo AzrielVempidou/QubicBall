@@ -56,7 +56,6 @@ module.exports = class commentController{
         }
       })
     } catch (error) {
-      console.log(error, "<<<");
       next(error)
     }
   }
@@ -79,7 +78,26 @@ module.exports = class commentController{
         }
       })
     } catch (error) {
-      console.log(error, "<<");
+      next(error)
+    }
+  }
+  static async deleteComment(req,res,next){
+    try {
+      const { commentId } = req.params
+
+      const findCommentById = await Comment.findByPk(+commentId)
+
+      if (!findCommentById) {
+        throw { name: "Not Found", message: "Comment not found" }
+      }
+      const deletePost = await findCommentById.destroy()
+      res.status(200).json({
+        response:{
+          status: 200,
+          message: "Comment has been deleted",
+        }
+      })
+    } catch (error) {
       next(error)
     }
   }

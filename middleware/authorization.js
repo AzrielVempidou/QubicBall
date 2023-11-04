@@ -14,7 +14,6 @@ const authorizationPost = async(req,res,next) => {
     }
     next()
   } catch (error) {
-    console.log(error, "<<");
     next(error)
   }
 }
@@ -32,7 +31,6 @@ const authorizationComments = async(req,res,next) => {
     }
     next()
   } catch (error) {
-    console.log(error, "<<");
     next(error)
   }
 }
