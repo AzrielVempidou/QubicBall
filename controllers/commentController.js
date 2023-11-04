@@ -60,5 +60,27 @@ module.exports = class commentController{
       next(error)
     }
   }
+  static async updateComment(req,res,next){
+    try {
+      const { commentId } = req.params
+      const comment = req.body
 
+      const findCommentById = await Comment.findByPk(+commentId)
+
+      if (!findCommentById) {
+        throw { name: "Not Found", message: "Comment not found" }
+      }
+
+      const updateComment = await findCommentById.update(comment)
+      res.status(200).json({
+        response:{
+          status: 200,
+          message: "Comment updated successfully",
+        }
+      })
+    } catch (error) {
+      console.log(error, "<<");
+      next(error)
+    }
+  }
 }

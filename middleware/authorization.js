@@ -1,6 +1,6 @@
-const { Post } = require('../models')
+const { Post, Comment } = require('../models')
 
-const authorization = async(req,res,next) => {
+const authorizationPost = async(req,res,next) => {
   try {
     const userId = +req.user.id
     const post = await Post.findByPk(req.params.blogId)
@@ -18,5 +18,25 @@ const authorization = async(req,res,next) => {
     next(error)
   }
 }
+const authorizationComments = async(req,res,next) => {
+  try {
+    const userId = +req.user.id
+    const comment = await Comment.findByPk(req.params.commentId)
 
-module.exports = authorization
+    if(!comment) {
+      throw { name: "Not Found", message: "Comment not found" }
+    }
+
+    if (comment.userId !== userId ) {
+      throw{ name: "Forbidden", message:"You are not authorized"}
+    }
+    next()
+  } catch (error) {
+    console.log(error, "<<");
+    next(error)
+  }
+}
+module.exports = { 
+  authorizationPost,
+  authorizationComments
+}
