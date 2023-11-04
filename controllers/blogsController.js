@@ -55,4 +55,21 @@ module.exports = class blogController{
       next(error)
     }
   }
+  static async createPost(req,res,next){
+    try {
+      const post = req.body
+      post.userId = req.user.id
+      const createPost = await Post.create(post)
+      res.status(201).json({
+        response:{
+          status: 201,
+          message: "Blog created successfully",
+          blog: createPost
+        }
+      })
+    } catch (error) {
+      console.log(error, '<<');
+      next(error)
+    }
+  }
 }

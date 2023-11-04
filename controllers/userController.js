@@ -44,7 +44,8 @@ module.exports = class UserController {
        
       }
       const access_token = generateToken({
-        id: Math.random(user.id),
+        id: user.id,
+        random_id: Math.random(user.id),
         email,
         username: user.username
       })

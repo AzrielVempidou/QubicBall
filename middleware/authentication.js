@@ -13,7 +13,6 @@ const authentication = async(req,res,next) => {
     }
 
     const data = verifyToken(access_token)
-
     const user = await User.findByPk(data.id)
     if (!user) {
       throw { name: "Unauthorized", message: "Unauthorized: Access token is required"}
