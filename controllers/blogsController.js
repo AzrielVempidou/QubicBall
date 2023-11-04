@@ -87,13 +87,34 @@ module.exports = class blogController{
 
       res.status(200).json({
         response:{
-          status: 201,
+          status: 200,
           message: "Blog updated successfully",
         }
       })
 
     } catch (error) {
       console.log(error, "<<");
+      next(error)
+    }
+  }
+  static async deletePost(req,res,next){
+    try {
+      const { blogId } = req.params
+      const findPostById = await Post.findByPk(+blogId)
+
+      if (!findPostById) {
+        throw { name: "Not Found", message: "Blog not found" }
+      }
+
+      const deletePost = await findPostById.destroy()
+      
+      res.status(200).json({
+        response:{
+          status: 200,
+          message: "Blog has been deleted",
+        }
+      })
+    } catch (error) {
       next(error)
     }
   }

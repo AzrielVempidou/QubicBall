@@ -9,6 +9,7 @@ blogRouter.get('/:blogId',blogController.getPostById)
 blogRouter.use(authentication)
 blogRouter.post('/',blogController.createPost)
 blogRouter.put('/:blogId',authorization,blogController.updatePost)
+blogRouter.delete('/:blogId',authorization,blogController.deletePost)
 
 
 module.exports = blogRouter
