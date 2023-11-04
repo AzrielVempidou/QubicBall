@@ -1,5 +1,7 @@
 'use strict';
 
+const { hashPass } = require('../helpers/bcrypt');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
@@ -12,7 +14,8 @@ module.exports = {
       return {
         ...user,
         createdAt: new Date,
-        updatedAt: new Date
+        updatedAt: new Date,
+        password: hashPass(user.password)
       }
      }));
 

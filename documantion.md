@@ -145,6 +145,13 @@ _Response (400 - Bad Request)_
 
 &nbsp;
 
+_Response (401 - Unauthorized)_
+```json
+{
+  "status": 401,
+  "message": "Invalid email or password"
+}
+
 ## 3. GET /blogs
 
 Description:
@@ -398,6 +405,7 @@ OR
   "message": "comment fields are required. Please fill in all the fields."
 }
 ```
+
 
 ## 8. PUT /blogs/:blogId
 
