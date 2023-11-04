@@ -25,9 +25,9 @@ const errorHandler = (err, req, res, next) => {
       status = 403;
       message = "Forbidden";
       break;
-    case "NotFound":
+    case "Not Found":
       status = 404
-      message = "Data not found"
+      message = err.message
       break;
   }
   res.status(status).json({

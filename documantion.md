@@ -146,26 +146,18 @@ _Response (400 - Bad Request)_
 &nbsp;
 
 _Response (401 - Unauthorized)_
+
 ```json
 {
   "status": 401,
   "message": "Invalid email or password"
 }
+```
 
 ## 3. GET /blogs
 
 Description:
 Get a list of all blogs.
-
-Request:
-
-- headers:
-
-```json
-{
-  "access_token": "string"
-}
-```
 
 _Response (200 - OK)_
 
@@ -181,7 +173,12 @@ _Response (200 - OK)_
         "body": "text",
         "userId": 1,
         "createdAt": "timestamp",
-        "updatedAt": "timestamp"
+        "updatedAt": "timestamp",
+        "User": {
+          "username": "String",
+          "email": "String"
+        },
+        ...
       },
       {
         "id": 2,
@@ -189,7 +186,12 @@ _Response (200 - OK)_
         "body": "text",
         "userId": 2,
         "createdAt": "timestamp",
-        "updatedAt": "timestamp"
+        "updatedAt": "timestamp",
+        "User": {
+          "username": "String",
+          "email": "String"
+        },
+        ...
       },
       ...
     ]
@@ -203,14 +205,6 @@ Description:
 Get details of a specific blog by ID.
 
 Request:
-
-- headers:
-
-```json
-{
-  "access_token": "string"
-}
-```
 
 - params:
 
@@ -406,7 +400,6 @@ OR
 }
 ```
 
-
 ## 8. PUT /blogs/:blogId
 
 Description:
@@ -449,7 +442,7 @@ _Response (200 - OK)_
 }
 ```
 
-_Response (404 - Not Found)
+\_Response (404 - Not Found)
 
 ```json
 {
@@ -493,10 +486,12 @@ Request:
   "blogId": "integer (required)"
 }
 ```
+
 _Response (200 - OK)_
 
 ```json
-{ "response": {
+{
+  "response": {
     "status": 200,
     "message": "Blog has been deleted"
   }
@@ -553,7 +548,7 @@ _Response (200 - OK)_
 }
 ```
 
-_Response (404 - Not Found)
+\_Response (404 - Not Found)
 
 ```json
 {
@@ -575,6 +570,7 @@ Request:
   "access_token": "string"
 }
 ```
+
 - params:
 
 ```json
@@ -586,7 +582,8 @@ Request:
 _Response (200 - OK)_
 
 ```json
-{ "response": {
+{
+  "response": {
     "status": 200,
     "message": "Comment has been deleted"
   }
