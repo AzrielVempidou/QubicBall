@@ -35,4 +35,30 @@ module.exports = class commentController{
       next(error)
     }
   }
+  static async createComment(req,res,next){
+    try {
+      const { postId } = req.params
+      const comment = req.body
+      comment.userId = req.user.id
+      comment.postId = postId
+
+
+      const createComment = await Comment.create(comment)
+
+      const user = await User.findByPk(req.user.id);
+
+      res.status(201).json({
+        response:{
+          status: 201,
+          message: "Comment created successfully",
+          comment: createComment.comment,
+          user: user.username
+        }
+      })
+    } catch (error) {
+      console.log(error, "<<<");
+      next(error)
+    }
+  }
+
 }
