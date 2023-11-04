@@ -72,4 +72,29 @@ module.exports = class blogController{
       next(error)
     }
   }
+  static async updatePost(req,res,next){
+    try {
+      const { blogId } = req.params
+      const post = req.body
+  
+      const findPostById = await Post.findByPk(+blogId)
+
+      if (!findPostById) {
+        throw { name: "Not Found", message: "Blog not found" }
+      }
+
+      const updatePost = await findPostById.update(post)
+
+      res.status(200).json({
+        response:{
+          status: 201,
+          message: "Blog updated successfully",
+        }
+      })
+
+    } catch (error) {
+      console.log(error, "<<");
+      next(error)
+    }
+  }
 }

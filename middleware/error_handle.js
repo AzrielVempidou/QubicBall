@@ -23,7 +23,7 @@ const errorHandler = (err, req, res, next) => {
       break;
     case "Forbidden":
       status = 403;
-      message = "Forbidden";
+      message = err.message;
       break;
     case "Not Found":
       status = 404
