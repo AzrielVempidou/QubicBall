@@ -39,20 +39,9 @@ module.exports = class UserController {
         }
       })
 
-      if(!user){
-        throw({
-          name: "Unauthorized",
-          message: "Invalid email or password"
-        })
-      }
-
-      const isPassword = comparePass(password, user.password)
-
-      if(!isPassword){
-        throw({
-          name: "Unauthorized",
-          message: "Invalid email or password"
-        })
+      if (!user || !comparePass(password, user.password)) {
+        throw { name : "InvalidEmailPassword"}
+       
       }
       const access_token = generateToken({
         email,
@@ -68,7 +57,7 @@ module.exports = class UserController {
 
       })
     } catch (error) {
-      console.log(error);
+      console.log(error, "<<<");
       next(error)
     }  
   }
