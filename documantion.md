@@ -6,13 +6,13 @@ List of available endpoint:
 
 - `POST /register`
 - `POST /login`
+- `GET /blogs`
+- `GET /blogs/:blogId`
+- `GET /comments/:postId`
 
 Routes below need authentication:
 
-- `GET /blogs`
-- `GET /blogs/:blogId`
 - `POST /blogs`
-- `GET /comments/:postId`
 - `POST /comments/:postId`
 
 Routes below need authentication & authorization:
