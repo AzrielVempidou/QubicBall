@@ -25,7 +25,6 @@ module.exports = class UserController {
       })
 
     } catch (error) {
-      console.log(error);
       next(error)
     }
   }
@@ -59,7 +58,6 @@ module.exports = class UserController {
 
       })
     } catch (error) {
-      console.log(error, "<<<");
       next(error)
     }  
   }

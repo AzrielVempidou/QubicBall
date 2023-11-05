@@ -1,5 +1,4 @@
 const errorHandler = (err, req, res, next) => {
-  // console.log(err,"<<< ini error");
   let status = err.status || 500;
   let message = err.msg || "Internal Server Error";
 
