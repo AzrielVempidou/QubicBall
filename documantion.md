@@ -6,13 +6,13 @@ List of available endpoint:
 
 - `POST /register`
 - `POST /login`
+- `GET /blogs`
+- `GET /blogs/:blogId`
+- `GET /comments/:postId`
 
 Routes below need authentication:
 
-- `GET /blogs`
-- `GET /blogs/:blogId`
 - `POST /blogs`
-- `GET /comments/:postId`
 - `POST /comments/:postId`
 
 Routes below need authentication & authorization:
@@ -146,26 +146,18 @@ _Response (400 - Bad Request)_
 &nbsp;
 
 _Response (401 - Unauthorized)_
+
 ```json
 {
   "status": 401,
   "message": "Invalid email or password"
 }
+```
 
 ## 3. GET /blogs
 
 Description:
 Get a list of all blogs.
-
-Request:
-
-- headers:
-
-```json
-{
-  "access_token": "string"
-}
-```
 
 _Response (200 - OK)_
 
@@ -181,7 +173,12 @@ _Response (200 - OK)_
         "body": "text",
         "userId": 1,
         "createdAt": "timestamp",
-        "updatedAt": "timestamp"
+        "updatedAt": "timestamp",
+        "User": {
+          "username": "String",
+          "email": "String"
+        },
+        ...
       },
       {
         "id": 2,
@@ -189,7 +186,12 @@ _Response (200 - OK)_
         "body": "text",
         "userId": 2,
         "createdAt": "timestamp",
-        "updatedAt": "timestamp"
+        "updatedAt": "timestamp",
+        "User": {
+          "username": "String",
+          "email": "String"
+        },
+        ...
       },
       ...
     ]
@@ -203,14 +205,6 @@ Description:
 Get details of a specific blog by ID.
 
 Request:
-
-- headers:
-
-```json
-{
-  "access_token": "string"
-}
-```
 
 - params:
 
@@ -306,14 +300,6 @@ Description:
 Get comments for a specific blog post by ID.
 Request:
 
-- headers:
-
-```json
-{
-  "access_token": "string"
-}
-```
-
 - params:
 
 ```json
@@ -328,17 +314,26 @@ _Response (200 - OK)_
 {
   "response": {
     "status": 200,
-    "message": "Blog retrieved successfully",
+    "message": "Comments retrieved successfully",
     "comments": [
       {
         "id": 1,
         "postId": 1,
         "userId": 1,
         "comment": "text",
-        "createdAt": "timestamp",
-        "updatedAt": "timestamp",
         "User" : {
-          "username":  "string"
+          "username": "string",
+          "email": "string"
+        },
+        "Post":{
+          "id": 1,
+          "title":"string",
+          "body": "text",
+          "userId": 1,
+          "User": {
+            "username": "string",
+            "email": "string"
+          }
         }
       },
       ...
@@ -384,10 +379,8 @@ _Response (201 - OK)_
   "response": {
     "status": 201,
     "message": "Comment added successfully",
-    "comment": {
-      "postId": 1,
-      "comment": "text"
-    }
+    "comment": "Comment 3 from User 1 for post 1.",
+    "user": "user1"
   }
 }
 ```
@@ -405,7 +398,6 @@ OR
   "message": "comment fields are required. Please fill in all the fields."
 }
 ```
-
 
 ## 8. PUT /blogs/:blogId
 
@@ -449,7 +441,7 @@ _Response (200 - OK)_
 }
 ```
 
-_Response (404 - Not Found)
+\_Response (404 - Not Found)
 
 ```json
 {
@@ -493,10 +485,12 @@ Request:
   "blogId": "integer (required)"
 }
 ```
+
 _Response (200 - OK)_
 
 ```json
-{ "response": {
+{
+  "response": {
     "status": 200,
     "message": "Blog has been deleted"
   }
@@ -553,7 +547,7 @@ _Response (200 - OK)_
 }
 ```
 
-_Response (404 - Not Found)
+\_Response (404 - Not Found)
 
 ```json
 {
@@ -575,6 +569,7 @@ Request:
   "access_token": "string"
 }
 ```
+
 - params:
 
 ```json
@@ -586,7 +581,8 @@ Request:
 _Response (200 - OK)_
 
 ```json
-{ "response": {
+{
+  "response": {
     "status": 200,
     "message": "Comment has been deleted"
   }

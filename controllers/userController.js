@@ -25,7 +25,6 @@ module.exports = class UserController {
       })
 
     } catch (error) {
-      console.log(error);
       next(error)
     }
   }
@@ -44,8 +43,10 @@ module.exports = class UserController {
        
       }
       const access_token = generateToken({
+        id: user.id,
+        random_id: Math.random(user.id),
         email,
-        id: Math.random(user.id)
+        username: user.username
       })
 
       res.status(200).json({
@@ -57,7 +58,6 @@ module.exports = class UserController {
 
       })
     } catch (error) {
-      console.log(error, "<<<");
       next(error)
     }  
   }

@@ -1,5 +1,4 @@
 const errorHandler = (err, req, res, next) => {
-  console.log(err,"<<< ini error");
   let status = err.status || 500;
   let message = err.msg || "Internal Server Error";
 
@@ -19,15 +18,15 @@ const errorHandler = (err, req, res, next) => {
       break;
     case "Unauthorized":
       status = 401;
-      message = "Unauthenticated";
+      message = "Unauthorized: Access token is required";
       break;
     case "Forbidden":
       status = 403;
-      message = "Forbidden";
+      message = err.message;
       break;
-    case "NotFound":
+    case "Not Found":
       status = 404
-      message = "Data not found"
+      message = err.message
       break;
   }
   res.status(status).json({
