@@ -9,10 +9,10 @@ Node.js: Download and install Node.js
 MySQL or PostgreSQL: Make sure you have a running instance of MySQL or PostgreSQL database server.
 
 Available Scripts
--npm test: Run tests using Jest.
--npm start: Start the production server.
--npm run dev: Start the development server with nodemon for automatic restarts during development.
--npm run db: Create database, run migrations, and seed data.
+- npm test: Run tests using Jest.
+- npm start: Start the production server.
+- npm run dev: Start the development server with nodemon for automatic restarts during development.
+- npm run db: Create database, run migrations, and seed data.
 
 API Endpoints
 - `POST /register`
